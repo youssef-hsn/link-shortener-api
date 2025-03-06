@@ -4,6 +4,8 @@ import { connectDB } from './utils/db.js';
 import { redirectMe } from './controllers/alias.controller.js';
 import aliasRouter from './routes/alias.router.js';
 import userRouter from './routes/user.router.js';
+import authRouter from './routes/auth.router.js';
+import { requireAuth, requireAdmin } from './utils/middleware.js';
 
 dotenv.config();
 
@@ -17,8 +19,9 @@ app.get('/test', (req, res) => {
 })
 
 app.get('/:alias', redirectMe);
-app.use('/api/alias/', aliasRouter);
-app.use('/api/user/', userRouter);
+app.use('/api/alias/', requireAuth, aliasRouter);
+app.use('/api/user/', requireAuth, requireAdmin, userRouter);
+app.use('/api/auth/', authRouter);
 
 app.listen(3000, () => {
     connectDB();
