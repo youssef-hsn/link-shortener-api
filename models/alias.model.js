@@ -12,6 +12,11 @@ const clickEventSchema = new mongoose.Schema({
 }, { _id: false });
 
 const aliasSchema = new mongoose.Schema({
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     alias: {
         type: String,
         required: true,
@@ -26,7 +31,12 @@ const aliasSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    clickEvents: [clickEventSchema]
+    clickEvents: [clickEventSchema],
+    sharedWith: [ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ]
 }, {
     timestamps: true,
 });
