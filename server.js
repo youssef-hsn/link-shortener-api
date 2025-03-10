@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import { connectDB } from './utils/db.js';
 import { redirectMe } from './controllers/alias.controller.js';
 import aliasRouter from './routes/alias.router.js';
@@ -11,6 +12,7 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
