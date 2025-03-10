@@ -41,8 +41,10 @@ export const getAlias = async (req, res) => {
 }
 
 export const createAlias = async (req, res) => {
-    const { alias, url } = req.body;
-    if (!alias || !url) return res.status(400).json({ error: 'Alias or URL is missing' });
+    let { alias, url } = req.body;
+    if (!url) return res.status(400).json({ error: 'Alias or URL is missing' });
+
+    if (!alias) alias = Math.random().toString(36).substring(2, 7);
 
     try {
         const owner = req.user.id;
